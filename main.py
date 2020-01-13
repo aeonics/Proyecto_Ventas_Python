@@ -32,6 +32,18 @@ def delete_client(client_name):
     else:
         _not_in_list()
 
+
+#Encuentra el cliente
+def search_client(client_name):
+    clients_list = clients.split(',')
+
+    for client in clients_list:
+        if client != client_name:
+            continue
+        else:
+            return True
+
+
 #Añadir una coma
 def _add_comma():
     global clients
@@ -45,6 +57,7 @@ def _print_welcome():
     print('[C]reate client')
     print('[D]elete client')
     print('[U]pdate client')
+    print('[S]earch client')
 
 #Obtener el nombre del cliente
 def _get_client_name():
@@ -72,5 +85,12 @@ if __name__ == "__main__":
         updated_client_name = input('What\'s the updated client name==> ')
         update_client(client_name, updated_client_name)
         list_clients()
+    elif command.lower() == 's':
+        client_name =_get_client_name()
+        found = search_client(client_name)#found es true o false
+        if found:
+            print('The client is in the client\'s list')
+        else:
+            print('The client : {}  is not in our client\'s list'.format(client_name))
     else:
         print('Invalid command!! ')
