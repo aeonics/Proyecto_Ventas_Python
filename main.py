@@ -1,13 +1,25 @@
 import sys #sys.exit perimte terminar la ejecución del script devolviendo un valor (en Unix/Linux esto se considera una muy buena práctica ya que permite encadenar comandos en función de si terminaron bien, retornando 0 o si tuvieron aglún problema, un valor diferente a 0).
 
-clients =['pablo', 'ricardo']
+clients =[ #contiene dos diccionarios
+    {
+        'name': 'Pablo',
+        'company': 'Google',
+        'email':'pablo@google.com',
+        'position': 'Software Engineer',
+    },
+    {
+        'name': 'Ricardo',
+        'company': 'Facebook',
+        'email': 'ricardo@facebook.com',
+        'position': 'Data Engineer',
+    }
+]
 
 #Crear CLientes
-def create_client(client_name):
-    global clients #variable global y s epuede usar dentro de la funcion
-    if client_name not in clients:
-        clients.append(client_name)
-        
+def create_client(client):
+    global clients #variable global y se puede usar dentro de la funcion
+    if client not in clients:
+        clients.append(client)
     else:
         _not_in_list()
 
@@ -15,7 +27,11 @@ def create_client(client_name):
 def list_clients():
     
     for idx, client in enumerate(clients):#enumeramos la lista pero con indice
-        print('{}: {}'.format(idx,client))
+        print('{uid} | {name} | {company} | {email} | {position}'.format(uid=idx,
+        name=client['name'],
+        company= client['company'],
+        email=client['email'],
+        position=client['position']))
 
 
 #Actualizar el cliente
@@ -60,6 +76,14 @@ def _print_welcome():
     print('[U]pdate client')
     print('[S]earch client')
 
+
+def _get_client_field(field_name):
+    field = None
+
+    while not field:
+        field =  input('What\'s the client {} '. format(field_name))
+
+    return field
 #Obtener el nombre del cliente
 def _get_client_name():
     client_name = None
@@ -84,8 +108,13 @@ if __name__ == "__main__":
 #Pedir al usuario opcion
     command = input('')
     if command.lower() == 'c':
-        client_name = _get_client_name()
-        create_client(client_name)
+        client = {
+            'name':_get_client_field('name'), 
+            'company': _get_client_field('company'),
+            'email': _get_client_field('email'),
+            'position': _get_client_field('position')
+        }
+        create_client(client)
         list_clients()
     elif command.lower() == 'd':
         client_name = _get_client_name()
